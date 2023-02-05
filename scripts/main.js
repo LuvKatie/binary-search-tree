@@ -1,19 +1,24 @@
+let test = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
+
 class Tree { 
-    constructor(root, left, right) {
+    constructor(arr, root, left, right) {
+        this.arr = arr;
         this.root = root;
         this.left = left;
         this.right = right;
     }
 
-    buildTree(arr) {
-        let start = 0;
-        let end = arr.length - 1;
+    buildTree(arr = mergeSort(this.arr), start, end) {
+        start = 0;
+        end = arr.length - 1;
 
         if(start > end) {
             return null;
         }
 
         let mid = Math.floor((start + end) / 2);
+
+        this.root = mid;
 
         if(this.setLeft(arr, start, mid - 1)) {
             return this.setLeft(arr, start, mid - 1);
@@ -27,11 +32,21 @@ class Tree {
     setLeft(arr, start, mid) {
         let left = this.left;
 
+        if (!left.root) {
+            left = left.left;
+        }
 
+        left = new Nodes(arr[mid])
     }
 
     setRight(arr, start, mid) {
-
+        let right = this.right;
+        if(right.root) {
+            return;
+        } else {
+            right = right.right;
+            right = new Nodes(arr[mid])
+        }
     }
 }
 
@@ -71,11 +86,15 @@ function merge(left, right) {
     const resultArr = [];
 
     while (left.length > 0 && right.length > 0) {
-        console.log(resultArr, left, right);
         const minValue = left[0] < right[0] ? left : right;
         const getValue = minValue.shift();
+        if(resultArr.includes(getValue)) {
+            continue;
+        }
         resultArr.push(getValue);
     }
 
     return resultArr.concat(left, right);
 }
+
+const testTree = new Tree(test);
