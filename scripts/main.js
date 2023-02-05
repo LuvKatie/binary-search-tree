@@ -22,21 +22,6 @@ class Tree {
         return this.root = arr[mid];
     }
 
-    // setLeft(arr, start, mid, left = this.left) {
-
-    //     if(start > mid) {
-    //         return left = null;
-    //     }
-        
-    //     arr = arr.slice(start, mid + 1);
-    //     let newMid = Math.floor(mid / 2);
-    //     left = new Nodes(arr[newMid]);
-    //     console.log(left);
-        
-    //     this.setLeft(arr, start, newMid - 1, left = left.left);
-    //     return this.setLeft(arr, start, newMid - 1, left = left.left);
-    // }
-
     setLeft(arr, start, mid, left = this.left) {
         if(start > mid) {
             return null;
