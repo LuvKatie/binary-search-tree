@@ -26,27 +26,19 @@ class Tree {
             return this.setRight(arr, end, mid + 1);
         }
 
-        return this.root;
+        return prettyPrint(this.root);
     }
 
     setLeft(arr, start, mid) {
-        let left = this.left;
-
-        if (!left.root) {
-            left = left.left;
-        }
-
-        left = new Nodes(arr[mid])
+        console.log(arr)
+        console.log(start)
+        console.log(mid)
     }
 
-    setRight(arr, start, mid) {
-        let right = this.right;
-        if(right.root) {
-            return;
-        } else {
-            right = right.right;
-            right = new Nodes(arr[mid])
-        }
+    setRight(arr, end, mid) {
+        console.log(arr)
+        console.log(end)
+        console.log(mid)
     }
 }
 
