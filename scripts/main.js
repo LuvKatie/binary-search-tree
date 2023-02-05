@@ -1,4 +1,5 @@
-let test = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
+let test = [9, 1, 8, 2, 4, 3, 7, 6, 5];
+let test2 = [1, 2, 3, 4, 5, 6, 7];
 
 class Tree { 
     constructor(arr, root, left, right) {
@@ -12,33 +13,60 @@ class Tree {
         start = 0;
         end = arr.length - 1;
 
-        if(start > end) {
+        let mid = Math.floor((start + end) / 2);
+
+        
+        this.left = this.setLeft(arr, start, mid - 1);
+        this.right = this.setRight(arr, mid + 1, end);
+        
+        return this.root = arr[mid];
+    }
+
+    // setLeft(arr, start, mid, left = this.left) {
+
+    //     if(start > mid) {
+    //         return left = null;
+    //     }
+        
+    //     arr = arr.slice(start, mid + 1);
+    //     let newMid = Math.floor(mid / 2);
+    //     left = new Nodes(arr[newMid]);
+    //     console.log(left);
+        
+    //     this.setLeft(arr, start, newMid - 1, left = left.left);
+    //     return this.setLeft(arr, start, newMid - 1, left = left.left);
+    // }
+
+    setLeft(arr, start, mid, left = this.left) {
+        if(start > mid) {
             return null;
         }
 
-        let mid = Math.floor((start + end) / 2);
+        arr = arr.slice(start, mid + 1);
+        let newMid = Math.floor(mid / 2);
+        
+        left = new Nodes(arr[newMid]);
+        left.left = this.setLeft(arr, start, newMid - 1);
 
-        this.root = mid;
+        return left;
+    }
 
-        if(this.setLeft(arr, start, mid - 1)) {
-            return this.setLeft(arr, start, mid - 1);
-        } else if(this.setRight(arr, end, mid + 1)) {
-            return this.setRight(arr, end, mid + 1);
+    setRight(arr, mid, end, right = this.right) {
+        console.log(arr)
+        console.log("mid " + mid)
+        console.log("end " + end)
+        if(mid <= 0) {
+            return null;
         }
 
-        return prettyPrint(this.root);
-    }
+        arr = arr.slice(mid, end + 1);
+        let newMid = Math.floor((mid - 2) / 2);
+        console.log("New Mid: " + newMid);
 
-    setLeft(arr, start, mid) {
-        console.log(arr)
-        console.log(start)
-        console.log(mid)
-    }
+        right = new Nodes(arr[newMid]);
+        right.right = this.setRight(arr, newMid + 1, end);
 
-    setRight(arr, end, mid) {
-        console.log(arr)
-        console.log(end)
-        console.log(mid)
+        return right;
     }
 }
 
@@ -89,4 +117,4 @@ function merge(left, right) {
     return resultArr.concat(left, right);
 }
 
-const testTree = new Tree(test);
+const testTree = new Tree(test2);
