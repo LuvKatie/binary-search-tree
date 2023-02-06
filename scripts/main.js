@@ -1,5 +1,4 @@
-let test = [9, 1, 8, 2, 4, 3, 7, 6, 5, 10, 11, 12, 13, 14, 15 ,16];
-let test2 = [1, 2, 3, 4, 5, 6, 7];
+let test = [24, 17, 10, 15, 8, 0, 230, 40];
 
 class Tree { 
     constructor(arr, root, left, right) {
@@ -15,12 +14,22 @@ class Tree {
 
         let mid = Math.floor((start + end) / 2);
 
-        console.log(arr)
         this.left = this.setLeft(arr, start, mid - 1);
         this.right = this.setRight(arr, mid + 1, end);
+
         
         return this.root = arr[mid];
     }
+
+    prettyPrint = (node = this, prefix = '', isLeft = true) => {
+        if (node.right !== null) {
+          this.prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
+        }
+        console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.root}`);
+        if (node.left !== null) {
+          this.prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
+        }
+      }
 
     setLeft(arr, start, mid, left = this.left) {
         if (arr.length == 0) {
@@ -28,6 +37,7 @@ class Tree {
         }
 
         arr = arr.slice(start, mid + 1);
+
         let newMid = Math.floor((arr.length - 1) / 2);
 
         left = new Nodes(arr[newMid]);
@@ -55,22 +65,13 @@ class Tree {
 }
 
 class Nodes {
-    constructor(root, left, right) {
+    constructor(root = null, left = null, right = null) {
         this.root = root;
         this.left = left;
         this.right = right;
     }
 }
 
-const prettyPrint = (node, prefix = '', isLeft = true) => {
-    if (node.right !== null) {
-      prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
-    }
-    console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
-    if (node.left !== null) {
-      prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
-    }
-}
 
 function mergeSort(arr) {
     if(arr.length <= 1) {
