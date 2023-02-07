@@ -1,4 +1,4 @@
-let test = [30, 20, 32, 40, 50, 60, 70, 65, 75, 80, 34, 36, 85];
+let test = [30, 20, 32, 40, 50, 60, 70, 65, 75, 80, 34, 36, 85, 28, 37, 19, 12];
 
 class Tree { 
     constructor(arr, root = null, left = null, right = null) {
@@ -67,8 +67,12 @@ class Tree {
     insert(value, node = this) {
         if (value > node.root && node.right.root == null) {
             node.right = new Nodes(value);
+            node.right.right = new Nodes();
+            node.right.left = new Nodes();
         } else if (value < node.root && node.left.root == null) {
             node.left = new Nodes(value);
+            node.left.right = new Nodes();
+            node.left.left = new Nodes();
         }
 
         if (value > node.root) {
@@ -81,7 +85,7 @@ class Tree {
     delete(value, node = this) {
         if (node.root == value) {
             if (node.left.root == null && node.right.root == null) {
-                Object.assign(node, new Nodes());
+                node = new Nodes();
             } else if (node.left.root !== null && node.right.root !== null) {
                 node.root = this.checkSmallest(node.right.left);
             } else if (node.right.root == null) {
