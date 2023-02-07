@@ -1,4 +1,4 @@
-let test = [24, 17, 10, 15, 8, 0, 230, 40, 88, 98, 5, 12, 357, 90, 9, 2, 1, 32, 37];
+let test = [30, 20, 32, 40, 50, 60, 70, 65, 75, 80, 34, 36, 85];
 
 class Tree { 
     constructor(arr, root = null, left = null, right = null) {
@@ -9,6 +9,7 @@ class Tree {
     }
 
     buildTree(arr = mergeSort(this.arr), start, end) {
+        console.log(arr)
         start = 0;
         end = arr.length;
 
@@ -80,10 +81,9 @@ class Tree {
     delete(value, node = this) {
         if (node.root == value) {
             if (node.left.root == null && node.right.root == null) {
-                node = new Nodes(value);
+                Object.assign(node, new Nodes());
             } else if (node.left.root !== null && node.right.root !== null) {
-                node.right.left = node.left;
-                Object.assign(node, node.right);
+                node.root = this.checkSmallest(node.right.left);
             } else if (node.right.root == null) {
                 Object.assign(node, node.left);
             } else if (node.left.root == null) {
@@ -97,6 +97,16 @@ class Tree {
         } else if (value < node.root) {
             return this.delete(value, node = node.left);
         }
+    }
+
+    checkSmallest(node) {
+        if (node.left.root == null) {
+            const smallest = node.root;
+            Object.assign(node, node.right);
+            return smallest;
+        }
+
+        return this.checkSmallest(node = node.left);
     }
 }
 
