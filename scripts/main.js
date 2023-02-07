@@ -103,6 +103,18 @@ class Tree {
         }
     }
 
+    find(value, node = this) {
+        if (value == node.root) {
+            return node;
+        }
+
+        if (value > node.root) {
+            return this.find(value, node = node.right);
+        } else if (value < node.root) {
+            return this.find(value, node = node.left);
+        }
+    }
+
     checkSmallest(node) {
         if (node.left.root == null) {
             const smallest = node.root;
