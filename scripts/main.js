@@ -1,4 +1,4 @@
-let test = [24, 17, 10, 15, 8, 0, 230, 40];
+let test = [24, 17, 10, 15, 8, 0, 230, 40, 88, 98, 5, 12];
 
 class Tree { 
     constructor(arr, root = null, left = null, right = null) {
@@ -82,22 +82,28 @@ class Tree {
             let child = node.right;
 
             if (child.left.root == null && child.right.root == null) {
-                node.right = new Nodes();
-            } else if (child.right.root !== null) {
+                child = new Nodes();
+            } else if (child.left.root !== null && child.right.root !== null) {
+                child.right.left.left = child.left;
                 node.right = child.right;
-            } else {
-                node.right = child.left;
+            } else if (child.right.root !== null) {
+                child = child.right;
+            } else if (child.left.root !== null) {
+                child = child.left;
             }
             return;
         } else if (node.left.root == value) {
             let child = node.left;
 
             if (child.left.root == null && child.right.root == null) {
-                node.left = new Nodes();
-            } else if (child.right.root !== null) {
+                child = new Nodes();
+            } else if (child.left.root !== null && child.right.root !== null) {
+                child.right.left.left = child.left;
                 node.left = child.right;
-            } else {
-                node.left = child.left;
+            } else if (child.right.root !== null) {
+                child = child.right;
+            } else if (child.left.root !== null) {
+                child = child.left;
             }
             return;
         }
