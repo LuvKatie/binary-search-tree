@@ -81,7 +81,7 @@ class Tree {
             return this.insert(value, node = node.left);
         }
     }
-
+    
     delete(value, node = this) {
         if (node.root == value) {
             if (node.left.root == null && node.right.root == null) {
@@ -95,12 +95,22 @@ class Tree {
             }
             return;
         }
-
+        
         if (value > node.root) {
             return this.delete(value, node = node.right);
         } else if (value < node.root) {
             return this.delete(value, node = node.left);
         }
+    }
+    
+    checkSmallest(node) {
+        if (node.left.root == null) {
+            const smallest = node.root;
+            Object.assign(node, node.right);
+            return smallest;
+        }
+
+        return this.checkSmallest(node = node.left);
     }
 
     find(value, node = this) {
@@ -115,14 +125,12 @@ class Tree {
         }
     }
 
-    checkSmallest(node) {
-        if (node.left.root == null) {
-            const smallest = node.root;
-            Object.assign(node, node.right);
-            return smallest;
-        }
-
-        return this.checkSmallest(node = node.left);
+    levelOrder(fn) {
+        // We will take this parameter as another function
+        // levelOrder will traverse the tree in breadth-first level order
+        // and provide each node as an argument like such fn(node)
+        // im guessing each time we run fn(node) fn will take that node
+        // and conjure up an array that's breadth-first ordered left to right??? idk is that what it wants?
     }
 }
 
