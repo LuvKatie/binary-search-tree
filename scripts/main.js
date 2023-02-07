@@ -1,7 +1,7 @@
 let test = [24, 17, 10, 15, 8, 0, 230, 40];
 
 class Tree { 
-    constructor(arr, root, left, right) {
+    constructor(arr, root = null, left = null, right = null) {
         this.arr = arr;
         this.root = root;
         this.left = left;
@@ -21,7 +21,7 @@ class Tree {
         return this.root = arr[mid];
     }
 
-    prettyPrint = (node = this, prefix = '', isLeft = true) => {
+    prettyPrint(node = this, prefix = '', isLeft = true) {
         if (node.right !== null) {
           this.prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
         }
@@ -29,7 +29,7 @@ class Tree {
         if (node.left !== null) {
           this.prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
         }
-      }
+    }
 
     setLeft(arr, start, mid, left = this.left) {
         if (arr.length == 0) {
@@ -61,6 +61,20 @@ class Tree {
         right.right = this.setRight(arr, newMid + 1, end);
 
         return right;
+    }
+
+    insert(value, node = this) {
+        if (value > node.root && node.right.root == null) {
+            node.right = new Nodes(value);
+        } else if (value < node.root && node.left.root == null) {
+            node.left = new Nodes(value);
+        }
+
+        if (value > node.root) {
+            return this.insert(value, node = node.right);
+        } else if (value < node.root) {
+            return this.insert(value, node = node.left);
+        }
     }
 }
 
