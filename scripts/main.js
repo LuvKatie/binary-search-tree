@@ -1,4 +1,4 @@
-let test = [24, 17, 10, 15, 8, 0, 230, 40, 88, 98, 5, 12];
+let test = [24, 17, 10, 15, 8, 0, 230, 40, 88, 98, 5, 12, 357, 90, 9, 2, 1, 32, 37];
 
 class Tree { 
     constructor(arr, root = null, left = null, right = null) {
@@ -78,32 +78,16 @@ class Tree {
     }
 
     delete(value, node = this) {
-        if (node.right.root == value) {
-            let child = node.right;
-
-            if (child.left.root == null && child.right.root == null) {
-                child = new Nodes();
-            } else if (child.left.root !== null && child.right.root !== null) {
-                child.right.left.left = child.left;
-                node.right = child.right;
-            } else if (child.right.root !== null) {
-                child = child.right;
-            } else if (child.left.root !== null) {
-                child = child.left;
-            }
-            return;
-        } else if (node.left.root == value) {
-            let child = node.left;
-
-            if (child.left.root == null && child.right.root == null) {
-                child = new Nodes();
-            } else if (child.left.root !== null && child.right.root !== null) {
-                child.right.left.left = child.left;
-                node.left = child.right;
-            } else if (child.right.root !== null) {
-                child = child.right;
-            } else if (child.left.root !== null) {
-                child = child.left;
+        if (node.root == value) {
+            if (node.left.root == null && node.right.root == null) {
+                node = new Nodes(value);
+            } else if (node.left.root !== null && node.right.root !== null) {
+                node.right.left = node.left;
+                Object.assign(node, node.right);
+            } else if (node.right.root == null) {
+                Object.assign(node, node.left);
+            } else if (node.left.root == null) {
+                Object.assign(node, node.right);
             }
             return;
         }
