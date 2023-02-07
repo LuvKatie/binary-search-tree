@@ -76,6 +76,38 @@ class Tree {
             return this.insert(value, node = node.left);
         }
     }
+
+    delete(value, node = this) {
+        if (node.right.root == value) {
+            let child = node.right;
+
+            if (child.left.root == null && child.right.root == null) {
+                node.right = new Nodes();
+            } else if (child.right.root !== null) {
+                node.right = child.right;
+            } else {
+                node.right = child.left;
+            }
+            return;
+        } else if (node.left.root == value) {
+            let child = node.left;
+
+            if (child.left.root == null && child.right.root == null) {
+                node.left = new Nodes();
+            } else if (child.right.root !== null) {
+                node.left = child.right;
+            } else {
+                node.left = child.left;
+            }
+            return;
+        }
+
+        if (value > node.root) {
+            return this.delete(value, node = node.right);
+        } else if (value < node.root) {
+            return this.delete(value, node = node.left);
+        }
+    }
 }
 
 class Nodes {
