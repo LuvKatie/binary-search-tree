@@ -125,12 +125,32 @@ class Tree {
         }
     }
 
-    levelOrder(fn) {
-        // We will take this parameter as another function
-        // levelOrder will traverse the tree in breadth-first level order
-        // and provide each node as an argument like such fn(node)
-        // im guessing each time we run fn(node) fn will take that node
-        // and conjure up an array that's breadth-first ordered left to right??? idk is that what it wants?
+    levelOrder(fn, currNodes = [this], breadth = []) {
+        let tempArr = [];
+
+        if (currNodes.length >= 1) {
+
+            if (currNodes.length == 1) {
+                breadth.push(currNodes[0].root);
+            }
+
+            currNodes.forEach(n => {
+                if(n.left.root !== null) {
+                    tempArr.push(n.left);
+                    breadth.push(n.left.root);
+                }
+                
+                if(n.right.root !== null) {
+                    tempArr.push(n.right);
+                    breadth.push(n.right.root);
+                }
+                return;
+            });
+        } else if (breadth.length == 17) {
+            return breadth;
+        }
+
+        return this.levelOrder(fn, currNodes = tempArr, breadth);
     }
 }
 
@@ -172,4 +192,4 @@ function merge(left, right) {
     return resultArr.concat(left, right);
 }
 
-const testTree = new Tree(test);
+const getTree = new Tree(test);
