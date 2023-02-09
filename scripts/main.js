@@ -146,11 +146,24 @@ class Tree {
                 }
                 return;
             });
-        } else if (breadth.length == 17) {
+        } else if (breadth.length == this.arr.length) {
             return breadth;
         }
 
         return this.levelOrder(fn, currNodes = tempArr, breadth);
+    }
+
+    inOrder(fn, node = this, inOrderArr = []) {
+        if (node.root === null) {
+            return;
+        }
+
+        this.inOrder(fn, node.left, inOrderArr);
+        inOrderArr.push(node.root);
+        this.inOrder(fn, node.right, inOrderArr);
+
+
+        return inOrderArr;
     }
 }
 
