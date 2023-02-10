@@ -189,6 +189,14 @@ class Tree {
         
         return postOrder;
     }
+
+    height(node = this, tall = 0) {
+        if (node.left === null) {
+            return tall;
+        }
+
+        return this.height(node.left, tall + 1);
+    }
 }
 
 class Nodes {
