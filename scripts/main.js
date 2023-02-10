@@ -165,6 +165,30 @@ class Tree {
 
         return inOrderArr;
     }
+
+    preOrder(fn, node = this, preOrder = []) {
+        if (node.root === null) {
+            return;
+        }
+
+        preOrder.push(node.root);
+        this.preOrder(fn, node.left, preOrder)
+        this.preOrder(fn, node.right, preOrder)
+
+        return preOrder;
+    }
+
+    postOrder(fn, node = this, postOrder = []) {
+        if (node.root === null) {
+            return;
+        }
+
+        this.postOrder(fn, node.left, postOrder)
+        this.postOrder(fn, node.right, postOrder)
+        postOrder.push(node.root);
+        
+        return postOrder;
+    }
 }
 
 class Nodes {
