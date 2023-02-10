@@ -233,11 +233,16 @@ class Tree {
     isBalanced() {
         let left = this.count(this.left, []);
         let right = this.count(this.right, []);
+
+        let leftL = left.length;
+        let rightL = right.length;
         
-        return {
-            left,
-            right
-        }
+        if (leftL == rightL ||
+            leftL == rightL - 1 ||
+            leftL - 1 == rightL) {
+                return true;
+            }
+        return false;
     }
     // Counts amount of nodes in each side of the tree
     count(node, array) {
@@ -252,26 +257,17 @@ class Tree {
         return array;
     }
 
+    rebalance() {
+        let newArr = this.count(this, []);
 
-    rebalance(node = this, newArr = []) {
-        if (node.root === null) {
-            return;
-        }
-
-        this.rebalance(node.left, newArr);
-        newArr.push(node.root);
-        this.rebalance(node.right, newArr);
-
-
-        return this.buildTree(newArr);
+        this.arr = newArr
+        this.buildTree(newArr);
     }
 
     messUpTree() {
-        for (let i = 0; i < 117; i++) {
-            let randomNum = Math.floor(Math.random() * 101);
-            let anotherNum = Math.floor(Math.random() * 20);
+        for (let i = 0; i < 202; i++) {
+            let randomNum = Math.floor(Math.random() * 427);
             this.insert(randomNum);
-            this.insert(anotherNum);
         }
     }
 }
