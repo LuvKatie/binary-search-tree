@@ -197,6 +197,38 @@ class Tree {
 
         return this.height(node.left, tall + 1);
     }
+
+    depth(node, currNodes = [this], queue = [], level = 1) {
+        let tempArr = [];
+        
+        if (currNodes.length >= 1) {
+
+            if (currNodes.length == 1) {
+                queue.push(currNodes[0].root);
+            }
+            // Increment each time we check a level of the tree
+            level++;
+
+            currNodes.forEach(n => {
+                if(n.left.root !== null) {
+                    tempArr.push(n.left);
+                    queue.push(n.left.root);
+                }
+                
+                if(n.right.root !== null) {
+                    tempArr.push(n.right);
+                    queue.push(n.right.root);
+                }
+                return;
+            });
+        }
+
+        if(queue.includes(node)) {
+            return level;
+        }
+
+        return this.depth(node, currNodes = tempArr, queue, level);
+    }
 }
 
 class Nodes {
