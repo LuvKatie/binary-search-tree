@@ -1,4 +1,4 @@
-let test = [30, 20, 32, 40, 50, 60, 70, 65, 75, 80, 34, 36, 85, 28, 37, 19, 12];
+let test = [30, 20, 32, 40, 50, 60, 70, 65, 75, 80, 34, 36, 85, 28, 37, 19, 12, 13, 14];
 
 class Tree { 
     constructor(arr, root = null, left = null, right = null) {
@@ -228,6 +228,26 @@ class Tree {
         }
 
         return this.depth(node, currNodes = tempArr, queue, level);
+    }
+
+    isBalanced(left = this.left, right = this.right, leftCount = [], rightCount = []) {
+        if (left.root === null || right.root == null) {
+            return;
+        }
+
+        leftCount.push(left.root);
+        rightCount.push(right.root);
+        this.isBalanced(left.left, right.left, leftCount, rightCount);
+        this.isBalanced(left.right, right.right, leftCount, rightCount);
+
+        let leftL = leftCount.length;
+        let rightL = rightCount.length;
+
+        if (leftL == rightL ||
+            leftL == rightL - 1 ||
+            leftL - 1 == rightL) {
+                return true;
+            }
     }
 }
 
