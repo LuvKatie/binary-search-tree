@@ -230,24 +230,49 @@ class Tree {
         return this.depth(node, currNodes = tempArr, queue, level);
     }
 
-    isBalanced(left = this.left, right = this.right, leftCount = [], rightCount = []) {
-        if (left.root === null || right.root == null) {
+    isBalanced() {
+        let left = this.count(this.left, []);
+        let right = this.count(this.right, []);
+        
+        return {
+            left,
+            right
+        }
+    }
+    // Counts amount of nodes in each side of the tree
+    count(node, array) {
+        if (node.root === null) {
             return;
         }
 
-        leftCount.push(left.root);
-        rightCount.push(right.root);
-        this.isBalanced(left.left, right.left, leftCount, rightCount);
-        this.isBalanced(left.right, right.right, leftCount, rightCount);
+        array.push(node.root);
+        this.count(node.left, array);
+        this.count(node.right, array);
 
-        let leftL = leftCount.length;
-        let rightL = rightCount.length;
+        return array;
+    }
 
-        if (leftL == rightL ||
-            leftL == rightL - 1 ||
-            leftL - 1 == rightL) {
-                return true;
-            }
+
+    rebalance(node = this, newArr = []) {
+        if (node.root === null) {
+            return;
+        }
+
+        this.rebalance(node.left, newArr);
+        newArr.push(node.root);
+        this.rebalance(node.right, newArr);
+
+
+        return this.buildTree(newArr);
+    }
+
+    messUpTree() {
+        for (let i = 0; i < 117; i++) {
+            let randomNum = Math.floor(Math.random() * 101);
+            let anotherNum = Math.floor(Math.random() * 20);
+            this.insert(randomNum);
+            this.insert(anotherNum);
+        }
     }
 }
 
